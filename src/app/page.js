@@ -88,7 +88,7 @@ export default function Home() {
       },
       error: {
         render({data}){
-          return <MyErrorComponent message={data.message} />
+          return "Error: " + data;
         }
       }
     },
