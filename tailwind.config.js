@@ -18,7 +18,9 @@ module.exports = {
     },
     fontFamily: {
       custom: ["Anton", "sans-serif"],
-      custom2: ["Honk", "system-ui"]
+      custom2: ["Honk", "system-ui"],
+      custom3: ["Protest Revolution", "sans-serif"],
+      custom4: ["Playfair Display", "sans-serif"],
     }
   },
   plugins: [],
