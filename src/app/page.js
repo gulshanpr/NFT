@@ -160,9 +160,9 @@ export default function Home() {
   const tokenUri = "https://gateway.pinata.cloud/ipfs/QmYZzquzW2FZQu3E1DbT5tGNEj9k3xy3NFJkiYdYNxvUax"
 
   const mintNFT = async () => {
-      // let nftTxn = await myNftContract.mintNFT(signer.address, tokenUri)
-      // await nftTxn.wait()
-      // setHashCode(nftTxn.hash);
+      let nftTxn = await myNftContract.mintNFT(signer.address, tokenUri)
+      await nftTxn.wait()
+      setHashCode(nftTxn.hash);
       setMinted(true);
   }
 
