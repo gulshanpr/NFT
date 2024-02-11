@@ -1,8 +1,9 @@
 'use client';
 require('dotenv').config();
 import { ToastContainer, toast } from 'react-toastify';
+import ReactConfetti from "react-confetti";
 import 'react-toastify/dist/ReactToastify.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 const ethers = require('ethers');
 
 export default function Home() {
@@ -11,6 +12,22 @@ export default function Home() {
   const [hashCode, setHashCode] = useState('');
   const [alreadySaidYes, setAlreadySaidYes] = useState(false);
   const [minted, setMinted] = useState(false);
+  const [Confetti, setConfetti] = useState(false);
+  const [windowDimensions, setDimensions] = useState({width: window.innerWidth, height: window.innerHeight});
+
+    const detectSize = () => {
+   
+        setDimensions({width: window.innerWidth, height: window.innerHeight});
+    }
+
+    useEffect(() => {
+      
+        window.addEventListener('resize', detectSize);
+        return () => window.removeEventListener('resize', detectSize);
+      
+    }, [windowDimensions]);
+
+
 
   const changeYesToNo = () => {
     if(!alreadySaidYes) {
@@ -24,6 +41,7 @@ export default function Home() {
       }
     } else{
       notifyAlreadySaidYes();
+      setConfetti(true);
     }
   };
 
@@ -39,13 +57,14 @@ export default function Home() {
       }
     } else{
       notifyAlreadySaidYes();
+      setConfetti(true);
     }
 
   }
 
 
   const notifyAlreadySaidYes = () => {
-    toast('😰 But you already said Yes!!!', {
+    toast('But you already said Yes 😰', {
       position: "top-right",
       autoClose: 1000,
       hideProgressBar: true,
@@ -54,11 +73,16 @@ export default function Home() {
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        background: "pink",
+        color: "black",
+        fontSize: "16px",
+      }
     });
   }
 
   const notifyNo = () => {
-    toast.error('you can not say that, please say Yes 🫣', {
+    toast.error('You can not say that, please say Yes 🫣', {
       position: "top-right",
       autoClose: 1000,
       hideProgressBar: true,
@@ -67,6 +91,11 @@ export default function Home() {
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        background: "pink",
+        color: "black",
+        fontSize: "16px",
+      }
     });
   };
 
@@ -76,13 +105,14 @@ export default function Home() {
     {
       pending: {
         render(){
-          return "wait, i want to show you something..."
+          return "Wait, i want to show you something..."
         },
         icon: "🟢",
       },
       success: {
         render(){
-          return "For your Yes!, I have a NFT for you ❤️";
+          setConfetti(true);
+          return "For your Yes!, I have a NFT for you ❤️❤️";
         },
         icon: "🟢",
       },
@@ -101,6 +131,11 @@ export default function Home() {
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        background: "pink",
+        color: "black",
+        fontSize: "16px",
+      }
     });
 
   // mintNFT start here
@@ -109,7 +144,7 @@ export default function Home() {
   const provider = new ethers.AlchemyProvider('sepolia', API_KEY)
 
 
-  const contractAddress = '0x30988E5D30d49094d0eC99df5F23812FBE6E60A2'
+  const contractAddress = '0x13D2CE6ae311657D8B3FEf153bf79126DFd626B3'
 
   const contract = require("../../nftABI.json");
   const abi = contract.abi
@@ -122,7 +157,7 @@ export default function Home() {
   // above this we have instasiated the contract that is deployed on the blockchain
 
 
-  const tokenUri = "https://gateway.pinata.cloud/ipfs/QmYueiuRNmL4MiA2GwtVMm6ZagknXnSpQnB3z2gWbz36hP"
+  const tokenUri = "https://gateway.pinata.cloud/ipfs/QmYZzquzW2FZQu3E1DbT5tGNEj9k3xy3NFJkiYdYNxvUax"
 
   const mintNFT = async () => {
       let nftTxn = await myNftContract.mintNFT(signer.address, tokenUri)
@@ -134,20 +169,26 @@ export default function Home() {
   // mintNFT end here
 
   return (
-    <div className='pt-8 font-bold text-center min-h-screen bg-gradient-to-r from-pink-300 to-red-300 from-rose-300 to-pink-300'>
+    <div className='pt-16 font-bold text-center min-h-screen bg-gradient-to-r from-pink-300 to-red-300 from-rose-300 to-pink-300'>
       <ToastContainer />
-      <mintbutton/>
-      <h1 className='text-9xl font-custom2'>Hii, How you doing?</h1>
-      <h2 className='text-8xl font-custom2'>Will you be mine Valentine??</h2>
-      <div className=''>
-      <button onClick={handleOpposite} className="text-2xl mt-24 mx-6 bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded">{opposite}</button>
-      <button onClick={changeYesToNo} className="text-2xl mx-6 bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded">{buttonText}</button>
+      {Confetti && typeof window !== 'undefined' && (
+          <ReactConfetti
+            width={windowDimensions.width}
+            height={windowDimensions.height}
+            tweenDuration={1000}
+          />
+        )}
+      <h1 className='text-6xl lg:text-8xl font-custom2'>Hii, How you doing?</h1>
+      <h2 className='pt-6 text-5xl lg:text-7xl font-custom2'>Will you be mine Valentine??</h2>
       <div className='pt-16'>
+      <button onClick={handleOpposite} className="mt-12 mx-4 py-2 px-4 text-lg lg:text-2xl bg-transparent text-black hover:bg-black font-semibold hover:text-white border hover:border-transparent rounded">{opposite}</button>
+      <button onClick={changeYesToNo} className="mx-4 text-lg lg:text-2xl bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded">{buttonText}</button>
+      <div className='pt-24'>
       {minted ? (
-        <a href={`https://sepolia.etherscan.io/tx/${hashCode}`} className="text-blue-900 underline text-2xl font-custom4">
-          {`https://sepolia.etherscan.io/tx/${hashCode}`}
+        <a href={`https://sepolia.etherscan.io/tx/${hashCode}`} target="_blank" rel="noopener noreferrer" className="text-black hover:text-sky- underline visited:text-purple-800 text-base lg:text-xl font-custom4">
+          See, What i got for you ❤️!
         </a>
-      ) : null}
+      ) : "❤️❤️❤️❤️"}
       </div>
       </div>
     </div>
