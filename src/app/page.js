@@ -13,19 +13,19 @@ export default function Home() {
   const [alreadySaidYes, setAlreadySaidYes] = useState(false);
   const [minted, setMinted] = useState(false);
   const [Confetti, setConfetti] = useState(false);
-  const [windowDimensions, setDimensions] = useState({width: window.innerWidth, height: window.innerHeight});
+  // const [windowDimensions, setDimensions] = useState({width: window.innerWidth, height: window.innerHeight});
 
-    const detectSize = () => {
+  //   const detectSize = () => {
    
-        setDimensions({width: window.innerWidth, height: window.innerHeight});
-    }
+  //       setDimensions({width: window.innerWidth, height: window.innerHeight});
+  //   }
 
-    useEffect(() => {
+  //   useEffect(() => {
       
-        window.addEventListener('resize', detectSize);
-        return () => window.removeEventListener('resize', detectSize);
+  //       window.addEventListener('resize', detectSize);
+  //       return () => window.removeEventListener('resize', detectSize);
       
-    }, [windowDimensions]);
+  //   }, [windowDimensions]);
 
 
 
@@ -64,7 +64,7 @@ export default function Home() {
 
 
   const notifyAlreadySaidYes = () => {
-    toast('But you already said Yes 😰', {
+    toast('You already said, Yes ❤️', {
       position: "top-right",
       autoClose: 1000,
       hideProgressBar: true,
@@ -160,21 +160,23 @@ export default function Home() {
   const tokenUri = "https://gateway.pinata.cloud/ipfs/QmYZzquzW2FZQu3E1DbT5tGNEj9k3xy3NFJkiYdYNxvUax"
 
   const mintNFT = async () => {
-      let nftTxn = await myNftContract.mintNFT(signer.address, tokenUri)
-      await nftTxn.wait()
-      setHashCode(nftTxn.hash);
+      // let nftTxn = await myNftContract.mintNFT(signer.address, tokenUri)
+      // await nftTxn.wait()
+      // setHashCode(nftTxn.hash);
       setMinted(true);
   }
 
   // mintNFT end here
 
+  console.log("gulshanprr");
+
   return (
     <div className='pt-16 font-bold text-center min-h-screen bg-gradient-to-r from-pink-300 to-red-300 from-rose-300 to-pink-300'>
       <ToastContainer />
-      {Confetti && typeof window !== 'undefined' && (
+      {Confetti && (
           <ReactConfetti
-            width={windowDimensions.width}
-            height={windowDimensions.height}
+            width={window.innerWidth}
+            height={window.innerHeight}
             tweenDuration={1000}
           />
         )}
