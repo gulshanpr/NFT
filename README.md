@@ -1,6 +1,5 @@
 ```this project is completed ```
-
-mohak changed this  file , absolutely coolest guy ever.
+ changed this  file , absolutely coolest guy ever.
 
 this project is live [https://valentine-themed-nft-minter.on-fleek.app/](https://valentine-themed-nft-minter.on-fleek.app/)
 this project follow thr philosophy of complete open source and decentralised software.
